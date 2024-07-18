@@ -1,0 +1,1 @@
+echo "SQL migration initailised"

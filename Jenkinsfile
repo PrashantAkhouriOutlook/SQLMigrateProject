@@ -1,19 +1,18 @@
 pipeline {
-     agent any
-     stages {
-         stage('Powershell version')
+    agent any
+    stages {
+        stage('Powershell version')
          {
-            steps{
+            steps {
                     sh 'pwsh --version'
             }
-            
          }
 
-         stage('Execute SQL Migartion')
+        stage('Execute SQL Migartion')
          {
-            steps{
+            steps {
                 sh 'pwsh SQLMigrate.ps1'
             }
-        }
-     }
+         }
+    }
 }

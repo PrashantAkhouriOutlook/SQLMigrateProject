@@ -82,15 +82,15 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            // Ensure we have a node context for cleanup
-            node {
-                // Clean up
-                echo "Cleaning up..."
-                sh "rm -f ${LOCAL_BACPAC_PATH}"
-                sh "sudo umount /mnt/azurefile || true"
-            }
-        }
-    }
+    // post {
+    //     always {
+    //         // Ensure we have a node context for cleanup
+    //         node {
+    //             // Clean up
+    //             echo "Cleaning up..."
+    //             sh "rm -f ${LOCAL_BACPAC_PATH}"
+    //             sh "sudo umount /mnt/azurefile || true"
+    //         }
+    //     }
+    // }
 }

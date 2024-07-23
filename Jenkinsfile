@@ -33,7 +33,7 @@ pipeline {
                     ]) {
                         sh """
                             # Log in to Azure
-                            az login --service-principal -u ${AZURE_CLIENT_ID} -p ${AZURE_CLIENT_SECRET} --tenant ${AZURE_TENANT_ID}
+                            az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
 
                             # Install Azure CLI extension for File Share if necessary
                             az extension add --name storage-preview || true
@@ -42,14 +42,14 @@ pipeline {
                             mkdir -p /mnt/azurefile
 
                             # Mount Azure File Share
-                            sudo mount -t cifs //${AZURE_STORAGE_ACCOUNT_NAME}.file.core.windows.net/${AZURE_FILE_SHARE_NAME} /mnt/azurefile -o vers=3.0,username=${AZURE_STORAGE_ACCOUNT_NAME},password=${AZURE_STORAGE_KEY},dir_mode=0777,file_mode=0777
+                            sudo mount -t cifs //$AZURE_STORAGE_ACCOUNT_NAME.file.core.windows.net/$AZURE_FILE_SHARE_NAME /mnt/azurefile -o vers=3.0,username=$AZURE_STORAGE_ACCOUNT_NAME,password=$AZURE_STORAGE_KEY,dir_mode=0777,file_mode=0777
 
                             # Download the BACPAC file
-                            cp /mnt/azurefile/${BLOB_NAME} ${LOCAL_BACPAC_PATH}
+                            cp /mnt/azurefile/$BLOB_NAME $LOCAL_BACPAC_PATH
                         """
 
                         // Check if the download was successful
-                        if (sh(script: "test -f ${LOCAL_BACPAC_PATH}", returnStatus: true) != 0) {
+                        if (sh(script: "test -f $LOCAL_BACPAC_PATH", returnStatus: true) != 0) {
                             error "Failed to download BACPAC file from Azure File Share"
                         }
                     }
@@ -65,12 +65,12 @@ pipeline {
 
                     // Check if SqlPackage.exe exists
                     if (!fileExists(sqlPackagePath)) {
-                        error "SqlPackage.exe not found at ${sqlPackagePath}"
+                        error "SqlPackage.exe not found at $sqlPackagePath"
                     }
 
                     // Restore the database from the BACPAC file
                     sh """
-                        ${sqlPackagePath} /Action:Import /SourceFile:${LOCAL_BACPAC_PATH} /TargetServerName:${AZURE_SQL_SERVER_NAME} /TargetDatabaseName:${AZURE_SQL_DATABASE_NAME} /TargetUser:${AZURE_SQL_ADMIN_USER} /TargetPassword:${AZURE_SQL_ADMIN_PASSWORD}
+                        $sqlPackagePath /Action:Import /SourceFile:$LOCAL_BACPAC_PATH /TargetServerName:$AZURE_SQL_SERVER_NAME /TargetDatabaseName:$AZURE_SQL_DATABASE_NAME /TargetUser:$AZURE_SQL_ADMIN_USER /TargetPassword:$AZURE_SQL_ADMIN_PASSWORD
                     """
 
                     // Check if the restore was successful

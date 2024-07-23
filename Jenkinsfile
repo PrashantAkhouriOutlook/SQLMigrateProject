@@ -31,7 +31,7 @@ pipeline {
                         string(credentialsId: 'azure-tenant-id', variable: 'AZURE_TENANT_ID'),
                         string(credentialsId: 'azure-storage-key', variable: 'AZURE_STORAGE_KEY')
                     ]) {
-                        sh """
+                        sh '''
                             # Log in to Azure
                             az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
 
@@ -46,7 +46,7 @@ pipeline {
 
                             # Download the BACPAC file
                             cp /mnt/azurefile/$BLOB_NAME $LOCAL_BACPAC_PATH
-                        """
+                        '''
 
                         // Check if the download was successful
                         if (sh(script: "test -f $LOCAL_BACPAC_PATH", returnStatus: true) != 0) {
@@ -69,12 +69,12 @@ pipeline {
                     }
 
                     // Restore the database from the BACPAC file
-                    sh """
+                    sh '''
                         $sqlPackagePath /Action:Import /SourceFile:$LOCAL_BACPAC_PATH /TargetServerName:$AZURE_SQL_SERVER_NAME /TargetDatabaseName:$AZURE_SQL_DATABASE_NAME /TargetUser:$AZURE_SQL_ADMIN_USER /TargetPassword:$AZURE_SQL_ADMIN_PASSWORD
-                    """
+                    '''
 
                     // Check if the restore was successful
-                    if (currentBuild.result == 'FAILURE') {
+                    if (currentBuild.result == "FAILURE") {
                         error "Failed to restore BACPAC file to Azure SQL Database"
                     }
                 }

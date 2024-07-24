@@ -49,7 +49,7 @@ pipeline {
                         '''
 
                         // Check if the download was successful
-                        if (sh(script: "test -f $LOCAL_BACPAC_PATH", returnStatus: true) != 0) {
+                        if (sh(script: 'test -f $LOCAL_BACPAC_PATH', returnStatus: true) != 0) {
                             error "Failed to download BACPAC file from Azure File Share"
                         }
                     }

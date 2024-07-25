@@ -24,13 +24,6 @@ pipeline {
     stages {
         stage('Download BACPAC from Azure File Share') {
             steps {
-                script {
-                    withCredentials([
-                        string(credentialsId: 'azure-client-id', variable: 'AZURE_CLIENT_ID'),
-                        string(credentialsId: 'azure-client-secret', variable: 'AZURE_CLIENT_SECRET'),
-                        string(credentialsId: 'azure-tenant-id', variable: 'AZURE_TENANT_ID'),
-                        string(credentialsId: 'azure-storage-key', variable: 'AZURE_STORAGE_KEY')
-                    ]) {
                         sh '''
                             # Log in to Azure
                             az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
@@ -52,8 +45,6 @@ pipeline {
                         if (sh(script: 'test -f $LOCAL_BACPAC_PATH', returnStatus: true) != 0) {
                             error "Failed to download BACPAC file from Azure File Share"
                         }
-                    }
-                }
             }
         }
 

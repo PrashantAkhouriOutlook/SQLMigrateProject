@@ -14,7 +14,7 @@ pipeline {
         AZURE_SQL_ADMIN_USER = credentials('azure-sql-admin-user')   // Jenkins credentials ID for Azure SQL admin user
         AZURE_SQL_ADMIN_PASSWORD = credentials('azure-sql-admin-password') // Jenkins credentials ID for Azure SQL admin password
 
-        // Azure credentials ( dont use useCredentials for type secrettext , secrekey, ssh )
+        // Azure credentials ( dont use useCredentials for type secrettext , secrekey,)
         AZURE_CLIENT_ID = credentials('azure-client-id')             // Jenkins credentials ID for Azure Client ID
         AZURE_CLIENT_SECRET = credentials('azure-client-secret')     // Jenkins credentials ID for Azure Client Secret
         AZURE_TENANT_ID = credentials('azure-tenant-id')             // Jenkins credentials ID for Azure Tenant ID
@@ -25,7 +25,12 @@ pipeline {
         stage('Download BACPAC from Azure File Share') {
             steps {
                 script {
-                    {
+                    withCredentials([
+                        string(credentialsId: 'azure-client-id', variable: 'AZURE_CLIENT_ID'),
+                        string(credentialsId: 'azure-client-secret', variable: 'AZURE_CLIENT_SECRET'),
+                        string(credentialsId: 'azure-tenant-id', variable: 'AZURE_TENANT_ID'),
+                        string(credentialsId: 'azure-storage-key', variable: 'AZURE_STORAGE_KEY')
+                    ]) {
                         sh '''
                             # Log in to Azure
                             az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID

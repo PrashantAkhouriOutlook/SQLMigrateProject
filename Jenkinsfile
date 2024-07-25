@@ -24,6 +24,8 @@ pipeline {
     stages {
         stage('Download BACPAC from Azure File Share') {
             steps {
+                script {
+                   {
                         sh '''
                             # Log in to Azure
                             az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
@@ -45,6 +47,8 @@ pipeline {
                         if (sh(script: 'test -f $LOCAL_BACPAC_PATH', returnStatus: true) != 0) {
                             error "Failed to download BACPAC file from Azure File Share"
                         }
+                    }
+                }
             }
         }
 

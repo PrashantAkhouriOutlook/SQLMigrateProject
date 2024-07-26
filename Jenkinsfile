@@ -9,6 +9,9 @@ pipeline {
                     // You can call a Groovy script here if needed
                     // For example, you might include a Groovy script from a file
                     load 'scripts/preparation.groovy'
+
+                           echo 'Prep : AZURE_SQL_SERVER_NAME is set to $env.AZURE_SQL_SERVER_NAME'
+                        echo 'Prep: AZURE_CLIENT_ID is set to $env.AZURE_CLIENT_ID'
                 }
             }
         }
@@ -38,6 +41,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
+
+                         echo 'Deploy : AZURE_SQL_SERVER_NAME is set to $env.AZURE_SQL_SERVER_NAME'
+                        echo 'Deploy : AZURE_CLIENT_ID is set to $env.AZURE_CLIENT_ID'
                     echo 'Deploying the project...'
                     // Call the Groovy script for deployment
                     // For example, you might execute a Groovy script that deploys your application

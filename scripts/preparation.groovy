@@ -23,8 +23,8 @@ def setEnvVars() {
         env.AZURE_TENANT_ID = credentials('azure-tenant-id')             // Jenkins credentials ID for Azure Tenant ID
         env.AZURE_STORAGE_KEY = credentials('azure-storage-key')         // Jenkins credentials ID for Azure Storage Key
 
-        echo "AZURE_SQL_SERVER_NAME is set to ${env.AZURE_SQL_SERVER_NAME}"
-        echo "AZURE_CLIENT_ID is set to ${env.AZURE_CLIENT_ID}"
+        echo 'AZURE_SQL_SERVER_NAME is set to $env.AZURE_SQL_SERVER_NAME'
+        echo 'AZURE_CLIENT_ID is set to $env.AZURE_CLIENT_ID'
 }
 
 // Call the method to set environment variables

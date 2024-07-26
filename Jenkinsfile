@@ -2,16 +2,16 @@ pipeline {
     agent any
     
     stages {
-        stage('Preparation') {
+        stage('Initialize Environment') {
             steps {
                 script {
                     echo 'Preparing environment...'
                     // You can call a Groovy script here if needed
                     // For example, you might include a Groovy script from a file
-                    load 'scripts/preparation.groovy'
+                    load 'scripts/setvariables.groovy'
 
-                           echo 'Prep : AZURE_SQL_SERVER_NAME is set to $env.AZURE_SQL_SERVER_NAME'
-                        echo 'Prep: AZURE_CLIENT_ID is set to $env.AZURE_CLIENT_ID'
+                         echo "AZURE_SQL_SERVER_NAME is set to ${env.AZURE_SQL_SERVER_NAME}"
+                         echo "AZURE_CLIENT_ID is set to ${env.AZURE_CLIENT_ID}"
                 }
             }
         }
@@ -42,9 +42,10 @@ pipeline {
             steps {
                 script {
 
-                         echo 'Deploy : AZURE_SQL_SERVER_NAME is set to $env.AZURE_SQL_SERVER_NAME'
-                        echo 'Deploy : AZURE_CLIENT_ID is set to $env.AZURE_CLIENT_ID'
+                       
                     echo 'Deploying the project...'
+                        echo " AZURE_SQL_SERVER_NAME is set to ${env.AZURE_SQL_SERVER_NAME}"
+                         echo " AZURE_CLIENT_ID is set to ${env.AZURE_CLIENT_ID}"
                     // Call the Groovy script for deployment
                     // For example, you might execute a Groovy script that deploys your application
                     load 'scripts/deploy.groovy'

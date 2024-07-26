@@ -15,7 +15,7 @@ def setEnvironmentVars() {
     env.AZURE_SQL_DATABASE_NAME = 'EmployeeDB'                 // Replace with the name of your target Azure SQL database
 
     // Using withCredentials for sensitive data
-    withCredentials([usernamePassword(credentialsId: 'azure-sql-admin-user', usernameVariable: 'AZURE_SQL_ADMIN_USER', passwordVariable: 'AZURE_SQL_ADMIN_PASSWORD'),
+    withCredentials([string(credentialsId: 'azure-sql-admin-user', usernameVariable: 'AZURE_SQL_ADMIN_USER', passwordVariable: 'AZURE_SQL_ADMIN_PASSWORD'),
                      string(credentialsId: 'azure-client-id', variable: 'AZURE_CLIENT_ID'),
                      string(credentialsId: 'azure-client-secret', variable: 'AZURE_CLIENT_SECRET'),
                      string(credentialsId: 'azure-tenant-id', variable: 'AZURE_TENANT_ID'),

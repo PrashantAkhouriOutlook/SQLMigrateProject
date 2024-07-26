@@ -11,7 +11,7 @@ pipeline {
                     load 'scripts/setvariables.groovy'
 
                          echo "AZURE_SQL_SERVER_NAME is set to ${env.AZURE_SQL_SERVER_NAME}"
-                         echo "AZURE_CLIENT_ID is set to ${env.AZURE_CLIENT_ID}"
+                         echo "AZURE_CLIENT_ID is set to $AZURE_CLIENT_ID"
                 }
             }
         }
@@ -41,14 +41,15 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-
-                       
-                    echo 'Deploying the project...'
+                      sh '''
+                        echo 'Deploying the project...'
                         echo " AZURE_SQL_SERVER_NAME is set to ${env.AZURE_SQL_SERVER_NAME}"
-                         echo " AZURE_CLIENT_ID is set to ${env.AZURE_CLIENT_ID}"
+                        echo ' AZURE_CLIENT_ID is set to $AZURE_CLIENT_ID'
                     // Call the Groovy script for deployment
                     // For example, you might execute a Groovy script that deploys your application
                     load 'scripts/deploy.groovy'
+                    
+                    '''
                 }
             }
         }

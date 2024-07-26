@@ -22,7 +22,7 @@ def setEnvironmentVars() {
                      string(credentialsId: 'azure-storage-key', variable: 'AZURE_STORAGE_KEY')]) {
         // Echo the credentials (for demonstration purposes, avoid doing this in real-world scenarios)
         echo "AZURE_SQL_SERVER_NAME is set to ${env.AZURE_SQL_SERVER_NAME}"
-        echo "AZURE_CLIENT_ID is set to ${env.AZURE_CLIENT_ID}"
+        echo "AZURE_CLIENT_ID is set to $AZURE_CLIENT_ID"
     }
 }
 

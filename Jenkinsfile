@@ -17,6 +17,18 @@ pipeline {
             }
         }
 
+         stage('TerraformDeployment') {
+            steps {
+                script {
+                      sh '''
+                        echo 'Deploying throgh Terraform ...'
+                        load 'scripts/terraform.groovy'
+                    
+                    '''
+                }
+            }
+        }
+
         // stage('Build') {
         //     steps {
         //         script {

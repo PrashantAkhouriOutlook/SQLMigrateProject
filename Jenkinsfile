@@ -24,7 +24,7 @@ pipeline {
                       sh '''
                      
                         echo 'Deploying through Terraform ...'
-                        load 'scripts/terraform.groovy'
+                        load 'scripts/terraformdeploy.groovy'
                     
                     '''
                 }

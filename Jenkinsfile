@@ -2,26 +2,28 @@ pipeline {
     agent any
     
     stages {
-        stage('Initialize Environment') {
-            steps {
-                script {
-                    sh "pwd"
-                    echo 'Preparing environment...'
-                    // You can call a Groovy script here if needed
-                    // For example, you might include a Groovy script from a file
-                    load 'scripts/setvariables.groovy'
+        // stage('Initialize Environment') {
+        //     steps {
+        //         script {
+        //             sh "pwd"
+        //             echo 'Preparing environment...'
+        //             // You can call a Groovy script here if needed
+        //             // For example, you might include a Groovy script from a file
+        //             load 'scripts/setvariables.groovy'
 
-                         echo "AZURE_SQL_SERVER_NAME is set to ${env.AZURE_SQL_SERVER_NAME}"
-                         echo "AZURE_CLIENT_ID is set to  ${AZURE_CLIENT_ID}"
-                }
-            }
-        }
+        //                  echo "AZURE_SQL_SERVER_NAME is set to ${env.AZURE_SQL_SERVER_NAME}"
+        //                  echo "AZURE_CLIENT_ID is set to  ${AZURE_CLIENT_ID}"
+        //         }
+        //     }
+        // }
 
          stage('TerraformDeployment') {
             steps {
                 script {
+                        
                       sh '''
-                        echo 'Deploying throgh Terraform ...'
+                     
+                        echo 'Deploying through Terraform ...'
                         load 'scripts/terraform.groovy'
                     
                     '''

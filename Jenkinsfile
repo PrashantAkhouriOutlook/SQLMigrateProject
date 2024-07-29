@@ -22,12 +22,12 @@ pipeline {
                 script {
 
                       sh '''
-                        echo 'Current working directory: $(pwd)'
+                        pwd
                         ls -la
-                        echo 'Deploying through Terraform ...'
-                        load 'scripts/terraformdeploy.groovy'
+                        echo 'Deploying through Terraform ...'             
                     
                     '''
+                       load 'scripts/terraformdeploy.groovy'
                 }
             }
         }

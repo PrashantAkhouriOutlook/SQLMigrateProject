@@ -20,9 +20,10 @@ pipeline {
          stage('TerraformDeployment') {
             steps {
                 script {
-                        
+
                       sh '''
-                     
+                        echo 'Current working directory: $(pwd)'
+                        ls -la
                         echo 'Deploying through Terraform ...'
                         load 'scripts/terraformdeploy.groovy'
                     
